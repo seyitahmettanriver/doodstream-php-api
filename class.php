@@ -12,16 +12,19 @@ class RemoteUploadAPI
 
     private function sendRequest($url)
     {
+        // CURL kullanarak API'ye HTTP isteği gönderen fonksiyon
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($ch);
         curl_close($ch);
 
+        // API'den gelen JSON yanıtını diziye çevirerek döndürme
         return json_decode($response, true);
     }
 
     public function remoteUpload($url, $fld_id = null, $new_title = null)
     {
+        // Remote Upload API'sini kullanarak dosya yükleme işlemi
         $url = $this->base_url . "upload/url?key={$this->api_key}&url={$url}";
 
         if ($fld_id) {
@@ -37,24 +40,28 @@ class RemoteUploadAPI
 
     public function remoteUploadList()
     {
+        // Remote Upload List API'sini kullanarak uzaktan yükleme listesini alma işlemi
         $url = $this->base_url . "urlupload/list?key={$this->api_key}";
         return $this->sendRequest($url);
     }
 
     public function remoteUploadStatus($file_code)
     {
+        // Remote Upload Status API'sini kullanarak dosya durumunu sorgulama işlemi
         $url = $this->base_url . "urlupload/status?key={$this->api_key}&file_code={$file_code}";
         return $this->sendRequest($url);
     }
 
     public function remoteUploadSlots()
     {
+        // Kullanılabilir uzaktan yükleme slotlarını alma işlemi
         $url = $this->base_url . "urlupload/slots?key={$this->api_key}";
         return $this->sendRequest($url);
     }
 
     public function listFiles($page = null, $per_page = null, $fld_id = null, $created = null)
     {
+        // Tüm dosyaları listeleme işlemi
         $url = $this->base_url . "file/list?key={$this->api_key}";
 
         if ($page) {
@@ -78,18 +85,21 @@ class RemoteUploadAPI
 
     public function fileStatus($file_code)
     {
+        // Dosya durumunu kontrol etme işlemi
         $url = $this->base_url . "file/check?key={$this->api_key}&file_code={$file_code}";
         return $this->sendRequest($url);
     }
 
     public function fileInfo($file_code)
     {
+        // Dosya bilgilerini alma işlemi
         $url = $this->base_url . "file/info?key={$this->api_key}&file_code={$file_code}";
         return $this->sendRequest($url);
     }
 
     public function fileRename($file_code, $title)
     {
+        // Dosya yeniden adlandırma işlemi
         $url = $this->base_url . "file/rename?key={$this->api_key}&file_code={$file_code}&title={$title}";
         return $this->sendRequest($url);
     }
