@@ -103,6 +103,17 @@ class RemoteUploadAPI
         $url = $this->base_url . "file/rename?key={$this->api_key}&file_code={$file_code}&title={$title}";
         return $this->sendRequest($url);
     }
+     public function createFolder($name, $parent_id = null)
+    {
+        // Klasör oluşturma işlemi
+        $url = $this->base_url . "folder/create?key={$this->api_key}&name={$name}";
+
+        if ($parent_id) {
+            $url .= "&parent_id={$parent_id}";
+        }
+
+        return $this->sendRequest($url);
+    }
 }
 
 // Kullanım örneği:
@@ -142,5 +153,10 @@ print_r($fileInfoResponse);
 $newTitle = "New Title";
 $fileRenameResponse = $remoteUploadAPI->fileRename($fileCode, $newTitle);
 print_r($fileRenameResponse);
+
+// Create Folder
+$folderName = "MyFolder";
+$createFolderResponse = $remoteUploadAPI->createFolder($folderName);
+print_r($createFolderResponse);
 
 ?>
